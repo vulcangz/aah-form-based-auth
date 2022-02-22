@@ -1,0 +1,27 @@
+# ---------------------------------------------------------------------------
+# i18n messages for form-based-auth application
+#
+# Doc: https://docs.aahframework.org/i18n.html
+# ---------------------------------------------------------------------------
+
+label {
+  pages {
+    app {
+      index {
+        title = "Example - Form Auth Home Page - aah Go web framework for Go"
+      }
+
+      login {
+        title = "Example - Form Auth Login Page - aah Go web framework for Go"
+      }
+
+      manage_users {
+        title = "Example - Manage Users - aah Go web framework for Go"
+      }
+
+      dashboard {
+        title = "Example - Admin Dashboard - aah Go web framework for Go"
+      }
+    }
+  }
+}

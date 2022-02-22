@@ -1,0 +1,9 @@
+{{ include "/common/error_header.html" . -}}
+<div class="container">{{ with .Error }}
+  <div class="content">
+    <div class="title">
+      {{ .Code }} {{ .Message }}
+    </div>
+  </div>{{ end }}
+</div>
+{{ include "/common/error_footer.html" . -}}

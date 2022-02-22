@@ -1,0 +1,52 @@
+{{ define "title" -}}
+<title>{{ i18n . "label.pages.app.dashboard.title" }}</title>
+{{- end }}
+
+{{ define "body" -}}
+
+<div class="container">
+  <div class="row text-center">
+    <h3>This is admin dashboard page</h3><br><br>
+    <p>Shown to users who have role "administrator"</p>
+    <br>    
+    <div class="row mtop15">
+      <div class="container col-xs-7 col-xs-offset-3">
+    <p>Remember yourself? You are <mark>{{ session . "LastName" }}, {{ session . "FirstName"}}</mark>.</p>
+      <ul class="list-group">
+        <li class="list-group-item text-left">Your role:  <mark>{{ session . "Roles" }}</mark></li>
+        <li class="list-group-item text-left">Your permission: <mark>{{ session . "Perms" }}</mark></li>
+      </ul>
+      </div>
+    </div>
+    <br>
+    <div class="row mtop15">
+      <div class="container col-xs-7 col-xs-offset-3">
+        <div class="text-center">
+          <h4>Demo Links</h4>
+        </div>
+        <table class="table table-striped text-left">
+          <thead>
+            <tr>
+              <th>Link</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{ if or (myispermitted . "users:manage:view") (myhasanyrole . "manager" "administrator") }}
+            <tr>
+              <td><a href="{{ rurl . "manage_users" }}">Manage Users</a></td>
+              <td>Shown to users who have either "manager" or "administrator" role and permission "users:manage:view"</td>
+            </tr>
+            {{ end }}
+            <tr>
+              <td><a href="{{ rurl . "index" }}">Home</a><br></td>
+              <td>To go to Homepage</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{- end }}
