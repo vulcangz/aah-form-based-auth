@@ -19,6 +19,10 @@ label {
         title = "Example - Manage Users - aah Go web framework for Go"
       }
 
+      edit_users {
+        title = "Example - Edit Users - aah Go web framework for Go"
+      }
+
       dashboard {
         title = "Example - Admin Dashboard - aah Go web framework for Go"
       }

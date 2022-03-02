@@ -61,4 +61,5 @@ func PostAuthEvent(e *aah.Event) {
 
 	ctx.Session().Set("Roles", ctx.Subject().AuthorizationInfo.Roles())
 	ctx.Session().Set("Perms", ctx.Subject().AuthorizationInfo.Permissions())
+
 }

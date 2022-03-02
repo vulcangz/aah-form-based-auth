@@ -1,0 +1,96 @@
+{{ define "title" -}}
+<title>{{ i18n . "label.pages.app.edit_users.title" }}</title>
+{{- end }}
+
+{{ define "body" -}}
+
+<div class="container">
+  <div class="row text-center" style="margin-top:5%">
+    <h2>Edit Users Page</h2><br>
+    <p class="mtop15">This is page shown to user who have role (manager or administrator) and permission
+      ("users:manage:view")</p>
+    <br>
+    <div class="row mtop15">
+      <div class="container col-xs-7 col-xs-offset-3">
+        <p>Hello, <mark>{{ session . "LastName" }}, {{ session . "FirstName"}}</mark>.</p>
+        <ul class="list-group">
+          <li class="list-group-item text-left">Your role: <mark>{{ session . "Roles" }}</mark></li>
+          <li class="list-group-item text-left">Your permission: <mark>{{ session . "Perms" }}</mark></li>
+        </ul>
+      </div>
+    </div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h2 class="h3 mb-0 text-gray-800">Update user</h2>
+      <small><a href="{{ rurl . "index" }}">Return to homepage</a></small>
+    </div>
+    <div class="mtop15 mbtm15">
+      {{ if .msg }}
+      <div class="alert alert-danger">
+        {{ .msg }}
+      </div>
+      {{ end }}
+    </div>
+    <div class="form-row text-left mtop15">
+      <div class="container col-xs-7 col-xs-offset-3">
+
+        {{ if and (myhasrole . "administrator") (myispermitted . "users:manage:edit") }}
+
+        <form action="/edit/users.html/{{.form.Email}}" method="post" novalidate>
+          <div class="form-group row">
+            <div class="col-md-6 mb-3">
+              <label for="inputFirstName">First Name</label>
+              <input type="text" class="form-control" placeholder="enter first name" name="firstName"
+                value="{{ .form.FirstName }}">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="inputLastName">Last Name</label>
+              <input type="text" class="form-control" placeholder="enter last name" name="lastName"
+                value="{{ .form.LastName }}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6 mb-3">
+              <label for="inputEmail">Email</label>
+              <input type="text" class="form-control" placeholder="enter email" name="email" value="{{ .form.Email }}"
+                required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="inputEmail">Password</label>
+              <input type="password" class="form-control" placeholder="Placeholder" name="password" value="" 
+                disabled>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6 mb-3">
+              <label for="selectTimezone">Roles</label>
+              <input type="text" class="form-control" placeholder="enter roles" name="roles" value="{{ .form.Roles }}"
+                required>
+              <small id="rolesHelp" class="form-text text-muted">user, manager or both</small>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="selectTimezone">Permissions</label>
+              <input type="text" class="form-control" placeholder="enter permissions" name="permissions"
+                value="{{ .form.Permissions }}" required>
+                <small id="permHelp" class="form-text text-muted">domain:action:instance</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6 mb-3">
+              <label for="inputIsLocked">Is Locked</label>
+              <input type="checkbox" class="custom-control-input" name="isLocked" {{ if .form.IsLocked }}checked{{ end }}>
+              <br/>
+              <small id="permHelp" class="form-text text-muted">Select the checkbox to lock this user.</small>
+            </div>
+          </div>
+          
+          <div class="form-group row mtop15 text-center">
+            <button class="btn btn-primary" type="submit">Submit form</button>
+            <a href="/manage/users.html" class="ml-2 btn btn-info">Cancel</a>
+          </div>
+      </form>
+      {{ end }}
+    </div>
+  </div>
+</div>
+
+{{- end }}

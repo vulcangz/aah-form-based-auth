@@ -7,15 +7,16 @@
 <div class="container">
   <div class="row text-center" style="margin-top:5%">
     <h2>Manage Users Page</h2><br>
-    <p class="mtop15">This is page shown to user who have role (manager or administrator) and permission ("users:manage:view")</p>
-    <br>    
+    <p class="mtop15">This is page shown to user who have role (manager or administrator) and permission
+      ("users:manage:view")</p>
+    <br>
     <div class="row mtop15">
       <div class="container col-xs-7 col-xs-offset-3">
-    <p>Remember yourself? You are <mark>{{ session . "LastName" }}, {{ session . "FirstName"}}</mark>.</p>
-      <ul class="list-group">
-        <li class="list-group-item text-left">Your role:  <mark>{{ session . "Roles" }}</mark></li>
-        <li class="list-group-item text-left">Your permission: <mark>{{ session . "Perms" }}</mark></li>
-      </ul>
+        <p>Remember yourself? You are <mark>{{ session . "LastName" }}, {{ session . "FirstName"}}</mark>.</p>
+        <ul class="list-group">
+          <li class="list-group-item text-left">Your role: <mark>{{ session . "Roles" }}</mark></li>
+          <li class="list-group-item text-left">Your permission: <mark>{{ session . "Perms" }}</mark></li>
+        </ul>
       </div>
     </div>
     <br>
@@ -34,9 +35,26 @@
           <tbody>
             {{ if and (myhasrole . "administrator") (myispermitted . "users:manage:edit") }}
             <tr>
-              <td><a href="#">Edit User</a></td>
-              <td>Shown to users who have role `administrator` and permission `users:manage:edit`</td>
+              <td><b>Edit User</b></td>
+              <td colspan="2">Shown to users who have role `administrator` and permission `users:manage:edit`.<br />
+                Click on the email below to edit the user.
+              </td>
             </tr>
+
+            {{ if .userlist }}
+            {{ range $k, $v := .userlist}}
+            <tr>
+              <td>{{ $k }}</td>
+              <td><a href="/edit/users.html/{{ $v.Email }}">{{ $v.Email }}</a></td>
+              {{ if $v.IsLocked }}
+              <td><code>The user is locked</code></td>
+              {{ else }}
+              <td><code>Roles: {{ $v.Roles }} {{ if ne $v.Permissions "" }} | Permission: {{ $v.Permissions }} {{ end }}</code></td>
+              {{ end }}
+            </tr>
+            {{ end }}
+            {{ end }}
+
             {{ end }}
             <tr>
               <td><a href="{{ rurl . "index" }}">Home</a><br></td>
