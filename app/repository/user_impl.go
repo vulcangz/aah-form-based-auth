@@ -102,8 +102,8 @@ func (repo *SormRepository) UpdateUser(email string, args UpdateUserArgs) error 
 
 	if len(changes) > 0 {
 		if _, err = u.Update(repo.db, boil.Whitelist(changes...)); err != nil {
-			if err := tx.Rollback(); err != nil {
-				return err
+			if err1 := tx.Rollback(); err1 != nil {
+				return err1
 			}
 			return err
 		}
@@ -116,11 +116,12 @@ func (repo *SormRepository) UpdateUser(email string, args UpdateUserArgs) error 
 		for _, r := range u.R.Roles {
 			err = u.RemoveRoles(repo.db, r)
 			if err != nil {
-				if err := tx.Rollback(); err != nil {
-					return err
+				if err1 := tx.Rollback(); err1 != nil {
+					return err1
 				}
 				return err
 			}
+			changed = true
 		}
 	}
 
@@ -129,11 +130,12 @@ func (repo *SormRepository) UpdateUser(email string, args UpdateUserArgs) error 
 		for _, p := range u.R.Permissions {
 			err = u.RemovePermissions(repo.db, p)
 			if err != nil {
-				if err := tx.Rollback(); err != nil {
-					return err
+				if err1 := tx.Rollback(); err1 != nil {
+					return err1
 				}
 				return err
 			}
+			changed = true
 		}
 	}
 
@@ -147,8 +149,8 @@ func (repo *SormRepository) UpdateUser(email string, args UpdateUserArgs) error 
 				} else {
 					err = u.RemoveRoles(repo.db, v)
 					if err != nil {
-						if err := tx.Rollback(); err != nil {
-							return err
+						if err1 := tx.Rollback(); err1 != nil {
+							return err1
 						}
 						return err
 					}
@@ -160,16 +162,16 @@ func (repo *SormRepository) UpdateUser(email string, args UpdateUserArgs) error 
 			// role name existed in role table?
 			r1, err := models.Roles(qm.Where("name = ?", r)).One(repo.db)
 			if err != nil {
-				if err := tx.Rollback(); err != nil {
-					return err
+				if err1 := tx.Rollback(); err1 != nil {
+					return err1
 				}
 				return err
 			}
 			if r1 != nil {
 				err = u.AddRoles(repo.db, false, r1)
 				if err != nil {
-					if err := tx.Rollback(); err != nil {
-						return err
+					if err1 := tx.Rollback(); err1 != nil {
+						return err1
 					}
 					return err
 				}
@@ -195,16 +197,16 @@ func (repo *SormRepository) UpdateUser(email string, args UpdateUserArgs) error 
 			// permission name existed in permission table?
 			p1, err := models.Permissions(qm.Where("name = ?", p)).One(repo.db)
 			if err != nil {
-				if err := tx.Rollback(); err != nil {
-					return err
+				if err1 := tx.Rollback(); err1 != nil {
+					return err1
 				}
 				return err
 			}
 			if p1 != nil {
 				err = u.AddPermissions(repo.db, false, p1)
 				if err != nil {
-					if err := tx.Rollback(); err != nil {
-						return err
+					if err1 := tx.Rollback(); err1 != nil {
+						return err1
 					}
 					return err
 				}
