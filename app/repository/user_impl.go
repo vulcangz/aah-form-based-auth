@@ -2,9 +2,11 @@ package repository
 
 import (
 	"database/sql"
+	"encoding/json"
 	"strings"
 
 	"aah-form-based-auth/app/models"
+	"aah-form-based-auth/app/queue"
 
 	aah "aahframe.work"
 	"github.com/google/uuid"
@@ -224,9 +226,28 @@ func (repo *SormRepository) UpdateUser(email string, args UpdateUserArgs) error 
 	}
 
 	if changed {
-		aah.App().PublishEvent("UserEdited", &UserEvent{
-			UserEmail: u.Email,
-		})
+		u, _ := models.Users(
+			models.UserWhere.Email.EQ(strings.TrimSpace(email)),
+			qm.Load("Roles"),
+			qm.Load("Permissions"),
+		).One(repo.db)
+
+		ue := UserEvent{
+			User: u,
+		}
+		for _, v := range u.R.Roles {
+			ue.Roles = append(ue.Roles, v.Name.String)
+		}
+		for _, v := range u.R.Permissions {
+			ue.Perms = append(ue.Perms, v.Name.String)
+		}
+
+		payload, _ := json.Marshal(ue)
+
+		if err := queue.Publish(payload, false); err != nil {
+			aah.App().Log().Debugf("%s", err)
+		}
+		aah.App().Log().Debugf("published %dB OK", len(payload))
 	}
 
 	return nil

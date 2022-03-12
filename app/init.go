@@ -4,11 +4,11 @@
 package main
 
 import (
-	"aah-form-based-auth/app/security"
 	"html/template"
 
 	"aah-form-based-auth/app/database"
 	"aah-form-based-auth/app/repository"
+	"aah-form-based-auth/app/security"
 
 	"aah-form-based-auth/app/util"
 
@@ -71,6 +71,7 @@ func init() {
 		//
 		// NOTE: Register your Custom middleware's right here
 		//
+		security.MyCustomMiddleware,
 
 		aah.ActionMiddleware,
 	)

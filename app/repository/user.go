@@ -6,7 +6,9 @@ import (
 
 // UserEvent User Event struct
 type UserEvent struct {
-	UserEmail string
+	User  *models.User `json:"user"`
+	Roles []string     `json:"roles"`
+	Perms []string     `json:"perms"`
 }
 
 // UpdateUserArgs User信息更新参数
