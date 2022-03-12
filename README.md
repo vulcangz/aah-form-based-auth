@@ -40,6 +40,11 @@ database {
 git clone https://github.com/vulcangz/aah-form-based-auth.git
 ```
 
+
+### RabbitMQ Server
+
+You need to have a running RabbitMQ server with the default URI "amqp://guest:guest@localhost:5672/" available.
+
 ### Run this example
 
 ```bash
