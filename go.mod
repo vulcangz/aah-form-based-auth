@@ -1,6 +1,6 @@
 module aah-form-based-auth
 
-go 1.17
+go 1.23.0
 
 require (
 	aahframe.work v0.12.5
@@ -24,7 +24,6 @@ require (
 	github.com/gobwas/pool v0.2.0 // indirect
 	github.com/gobwas/ws v1.0.0 // indirect
 	github.com/gofrs/uuid v3.2.0+incompatible // indirect
-	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/spf13/cast v1.4.1 // indirect
 	github.com/tdewolff/minify v0.0.0-20180913035026-a8ba821b5bd8 // indirect
 	github.com/tdewolff/parse v0.0.0-20180825090006-bcb5c6a1c04e // indirect
@@ -35,12 +34,10 @@ require (
 	github.com/volatiletech/randomize v0.0.1 // indirect
 	golang.org/x/crypto v0.21.0 // indirect
 	golang.org/x/net v0.23.0 // indirect
-	golang.org/x/oauth2 v0.0.0-20210819190943-2bc19b11175f // indirect
+	golang.org/x/oauth2 v0.27.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
-	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.21.0 // indirect
 )
